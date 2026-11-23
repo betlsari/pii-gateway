@@ -1,7 +1,7 @@
 import pytest
 
-from pii_gateway.detectors import tckn_adaylari_bul, tckn_gecerli_mi
-
+from pii_gateway.detectors import tckn_adaylari_bul, tckn_bul, tckn_gecerli_mi
+from pii_gateway.models import Category, Finding
 
 def test_tek_tckn_bulur():
     metin = "Ahmet Yılmaz'ın TCKN'si 10000000146 yazıyor."
@@ -46,3 +46,26 @@ def test_gecerli_tckn(tckn):
 )
 def test_gecersiz_tckn(tckn):
     assert tckn_gecerli_mi(tckn) is False
+
+
+
+
+
+def test_gecerli_tckn_bulunur():
+    metin = "Ahmet Yılmaz'ın TCKN'si 10000000146 yazıyor."
+    bulgular = tckn_bul(metin)
+    assert len(bulgular) == 1
+    assert bulgular[0].confidence == 1.0
+    assert bulgular[0].text == "10000000146"
+
+
+def test_sahte_tckn_elenir():
+    metin = "Sipariş no: 12345678901"
+    assert tckn_bul(metin) == []
+
+
+def test_iki_tckn_ikisi_de_bulunur():
+    metin = "Birincisi 10000000146, ikincisi 12345678950."
+    bulgular = tckn_bul(metin)
+    assert len(bulgular) == 2
+    assert bulgular[0].start < bulgular[1].start

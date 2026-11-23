@@ -38,3 +38,12 @@ def tckn_gecerli_mi(metin: str) -> bool:
         return False
 
     return True
+
+def tckn_bul(metin: str) -> list[Finding]:
+    sonuc = []
+    for aday in tckn_adaylari_bul(metin):
+        if tckn_gecerli_mi(aday.text):
+            sonuc.append(
+                Finding(Category.TCKN, aday.start, aday.end, aday.text, 1.0)
+            )
+    return sonuc
