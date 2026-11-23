@@ -1,6 +1,6 @@
 import pytest
 
-from pii_gateway.detectors import tckn_adaylari_bul
+from pii_gateway.detectors import tckn_adaylari_bul, tckn_gecerli_mi
 
 
 def test_tek_tckn_bulur():
@@ -22,3 +22,27 @@ def test_tek_tckn_bulur():
 )
 def test_tckn_olmayanlari_bulmaz(metin):
     assert tckn_adaylari_bul(metin) == []
+
+
+@pytest.mark.parametrize(
+    "tckn",
+    ["10000000146", "12345678950"],
+)
+def test_gecerli_tckn(tckn):
+    assert tckn_gecerli_mi(tckn) is True
+
+
+@pytest.mark.parametrize(
+    "tckn",
+    [
+        "10000000147",   # son hane yanlış
+        "10000000156",   # d10 yanlış
+        "01234567890",   # ilk hane 0
+        "1234567890",    # 10 hane
+        "123456789012",  # 12 hane
+        "1000000014a",   # harf içeriyor
+        "",              # boş
+    ],
+)
+def test_gecersiz_tckn(tckn):
+    assert tckn_gecerli_mi(tckn) is False
