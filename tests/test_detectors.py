@@ -6,6 +6,7 @@ from pii_gateway.detectors import (
     tckn_adaylari_bul,
     tckn_bul,
     tckn_gecerli_mi,
+    telefon_bul,
 )
 from pii_gateway.models import Category, Finding
 
@@ -121,3 +122,44 @@ def test_iban_bulunur_bitisik():
 def test_sahte_iban_elenir():
     metin = "IBAN TR330006100519786457841327 yazıyor."
     assert iban_bul(metin) == []
+
+@pytest.mark.parametrize(
+    "telefon",
+    [
+        "05321234567",
+        "0532 123 45 67",
+        "0 532 123 45 67",
+        "+90 532 123 45 67",
+        "+905321234567",
+        "(0532) 123 45 67",
+        "0532-123-45-67",
+    ],
+)
+def test_telefon_bulunur(telefon):
+    bulgular = telefon_bul(f"Tel: {telefon} arayın.")
+    assert len(bulgular) == 1
+    assert bulgular[0].text == telefon
+    assert bulgular[0].confidence == 0.8
+
+
+@pytest.mark.parametrize(
+    "metin",
+    [
+        "Sipariş no: 123456789012345",
+        "Tarih: 12.03.2024",
+        "Kod: 05321234",             # çok kısa
+        "Sabit: 02121234567",        # 5 ile başlamıyor
+        "Tutar 15321234567",         # başında 0 / +90 yok
+        "Numara 053212345678",       # 12 hane
+    ],
+)
+def test_telefon_olmayanlari_bulmaz(metin):
+    assert telefon_bul(metin) == []
+
+
+def test_telefon_konumu():
+    metin = "Beni ara: 0532 123 45 67 tamam"
+    b = telefon_bul(metin)[0]
+    assert b.start == 10
+    assert b.end == 24
+    assert metin[b.start:b.end] == "0532 123 45 67"

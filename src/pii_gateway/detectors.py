@@ -4,7 +4,9 @@ from pii_gateway.models import Category, Finding
 
 ADAY_DESENI = re.compile(r"(?<!\d)\d{11}(?!\d)")
 IBAN_ADAY_DESENI = re.compile(r"(?<![A-Za-z0-9])TR\d{2}(?:[ ]?\d{4}){5}[ ]?\d{2}(?![A-Za-z0-9])")
-
+TELEFON_DESENI = re.compile(
+    r"(?<![\w+])\(?(?:\+90|0)[ ]?5\d{2}\)?[ \-]?\d{3}[ \-]?\d{2}[ \-]?\d{2}(?!\d)"
+)
 
 def tckn_adaylari_bul(metin: str) -> list[Finding]:
     bulgular = []
@@ -88,3 +90,11 @@ def iban_bul(metin: str) -> list[Finding]:
                 Finding(Category.IBAN, aday.start, aday.end, aday.text, 1.0)
             )
     return sonuc
+
+def telefon_bul(metin: str) -> list[Finding]:
+    bulgular = []
+    for m in TELEFON_DESENI.finditer(metin):
+        bulgular.append(
+            Finding(Category.TELEFON, m.start(), m.end(), m.group(), 0.8)
+        )
+    return bulgular
