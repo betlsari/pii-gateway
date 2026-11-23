@@ -98,3 +98,24 @@ def telefon_bul(metin: str) -> list[Finding]:
             Finding(Category.TELEFON, m.start(), m.end(), m.group(), 0.8)
         )
     return bulgular
+
+def cakismalari_coz(bulgular: list[Finding]) -> list[Finding]:
+    sirali = sorted(
+        bulgular,
+        key=lambda b: (b.confidence, b.end - b.start),
+        reverse=True,
+    )
+    secilen = []
+    for aday in sirali:
+        cakisiyor = any(
+            aday.start < s.end and s.start < aday.end for s in secilen
+        )
+        if not cakisiyor:
+            secilen.append(aday)
+    secilen.sort(key=lambda b: b.start)
+    return secilen
+
+
+def detect(metin: str) -> list[Finding]:
+    bulgular = tckn_bul(metin) + iban_bul(metin) + telefon_bul(metin)
+    return cakismalari_coz(bulgular)

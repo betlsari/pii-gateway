@@ -1,12 +1,15 @@
 import pytest
 
 from pii_gateway.detectors import (
+    cakismalari_coz,
+    detect,
     iban_bul,
     iban_gecerli_mi,
     tckn_adaylari_bul,
     tckn_bul,
     tckn_gecerli_mi,
     telefon_bul,
+
 )
 from pii_gateway.models import Category, Finding
 
@@ -163,3 +166,34 @@ def test_telefon_konumu():
     assert b.start == 10
     assert b.end == 24
     assert metin[b.start:b.end] == "0532 123 45 67"
+
+
+def test_detect_uc_tur_birlikte():
+    metin = (
+        "TCKN 10000000146, tel 0532 123 45 67, "
+        "IBAN TR33 0006 1005 1978 6457 8413 26."
+    )
+    bulgular = detect(metin)
+    assert [b.category for b in bulgular] == [
+        Category.TCKN,
+        Category.TELEFON,
+        Category.IBAN,
+    ]
+    assert bulgular[0].start < bulgular[1].start < bulgular[2].start
+
+
+def test_detect_bos_metin():
+    assert detect("Merhaba dünya") == []
+
+
+def test_cakisma_yuksek_guven_kazanir():
+    dusuk = Finding(Category.TELEFON, 0, 10, "x" * 10, 0.5)
+    yuksek = Finding(Category.TCKN, 5, 15, "y" * 10, 1.0)
+    sonuc = cakismalari_coz([dusuk, yuksek])
+    assert sonuc == [yuksek]
+
+
+def test_cakisma_yoksa_ikisi_de_kalir():
+    a = Finding(Category.TCKN, 0, 5, "a" * 5, 1.0)
+    b = Finding(Category.TELEFON, 5, 10, "b" * 5, 0.8)
+    assert cakismalari_coz([a, b]) == [a, b]
