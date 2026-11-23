@@ -1,0 +1,12 @@
+[
+  {
+    "metin": "Ahmet'in TCKN'si 10000000146 yazıyor.",
+    "etiketler": [
+      {"kategori": "TCKN", "start": 17, "end": 28}
+    ]
+  },
+  {
+    "metin": "Sipariş no: 12345678901",
+    "etiketler": []
+  }
+]
