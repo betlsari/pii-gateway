@@ -8,5 +8,21 @@
   {
     "metin": "Sipariş no: 12345678901",
     "etiketler": []
+  },
+  {
+    "metin": "Beni ara: 0532 123 45 67 tamam",
+    "etiketler": [
+      {"kategori": "TELEFON", "start": 10, "end": 24}
+    ]
+  },
+  {
+    "metin": "Hesap: TR33 0006 1005 1978 6457 8413 26 numarasına yatırın.",
+    "etiketler": [
+      {"kategori": "IBAN", "start": 7, "end": 39}
+    ]
+  },
+  {
+    "metin": "IBAN TR330006100519786457841327 yazıyor.",
+    "etiketler": []
   }
 ]
