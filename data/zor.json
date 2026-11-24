@@ -1,0 +1,105 @@
+[
+ {
+  "metin": "Beni 5321234567 arayın.",
+  "etiketler": [
+   {
+    "kategori": "TELEFON",
+    "start": 5,
+    "end": 15
+   }
+  ]
+ },
+ {
+  "metin": "Sabit hat: 0212 123 45 67",
+  "etiketler": [
+   {
+    "kategori": "TELEFON",
+    "start": 11,
+    "end": 25
+   }
+  ]
+ },
+ {
+  "metin": "Ara: 0 (532) 123 45 67",
+  "etiketler": [
+   {
+    "kategori": "TELEFON",
+    "start": 5,
+    "end": 22
+   }
+  ]
+ },
+ {
+  "metin": "IBAN: TR33-0006-1005-1978-6457-8413-26",
+  "etiketler": [
+   {
+    "kategori": "IBAN",
+    "start": 6,
+    "end": 38
+   }
+  ]
+ },
+ {
+  "metin": "IBAN: tr330006100519786457841326",
+  "etiketler": [
+   {
+    "kategori": "IBAN",
+    "start": 6,
+    "end": 32
+   }
+  ]
+ },
+ {
+  "metin": "TC kimlik: 1 0 0 0 0 0 0 0 1 4 6",
+  "etiketler": [
+   {
+    "kategori": "TCKN",
+    "start": 11,
+    "end": 32
+   }
+  ]
+ },
+ {
+  "metin": "TCKN:10000000146",
+  "etiketler": [
+   {
+    "kategori": "TCKN",
+    "start": 5,
+    "end": 16
+   }
+  ]
+ },
+ {
+  "metin": "tel:05321234567",
+  "etiketler": [
+   {
+    "kategori": "TELEFON",
+    "start": 4,
+    "end": 15
+   }
+  ]
+ },
+ {
+  "metin": "10000000146 ve 0532 123 45 67",
+  "etiketler": [
+   {
+    "kategori": "TCKN",
+    "start": 0,
+    "end": 11
+   },
+   {
+    "kategori": "TELEFON",
+    "start": 15,
+    "end": 29
+   }
+  ]
+ },
+ {
+  "metin": "Sipariş: 05321234567",
+  "etiketler": []
+ },
+ {
+  "metin": "Sipariş no: 12345678950",
+  "etiketler": []
+ }
+]
