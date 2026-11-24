@@ -197,3 +197,19 @@ def test_cakisma_yoksa_ikisi_de_kalir():
     a = Finding(Category.TCKN, 0, 5, "a" * 5, 1.0)
     b = Finding(Category.TELEFON, 5, 10, "b" * 5, 0.8)
     assert cakismalari_coz([a, b]) == [a, b]
+
+
+def test_tireli_iban_bulunur():
+    b = iban_bul("IBAN: TR33-0006-1005-1978-6457-8413-26")
+    assert len(b) == 1
+    assert b[0].text == "TR33-0006-1005-1978-6457-8413-26"
+
+
+def test_kucuk_harfli_iban_bulunur():
+    assert len(iban_bul("IBAN: tr330006100519786457841326")) == 1
+
+
+def test_basiz_telefon_bulunur():
+    b = telefon_bul("Beni 5321234567 arayın.")
+    assert len(b) == 1
+    assert b[0].text == "5321234567"

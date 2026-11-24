@@ -3,9 +3,13 @@ import re
 from pii_gateway.models import Category, Finding
 
 ADAY_DESENI = re.compile(r"(?<!\d)\d{11}(?!\d)")
-IBAN_ADAY_DESENI = re.compile(r"(?<![A-Za-z0-9])TR\d{2}(?:[ ]?\d{4}){5}[ ]?\d{2}(?![A-Za-z0-9])")
+IBAN_ADAY_DESENI = re.compile(
+    r"(?<![A-Za-z0-9])TR\d{2}(?:[ \-]?\d{4}){5}[ \-]?\d{2}(?![A-Za-z0-9])",
+    re.IGNORECASE,
+)
+
 TELEFON_DESENI = re.compile(
-    r"(?<![\w+])\(?(?:\+90|0)[ ]?5\d{2}\)?[ \-]?\d{3}[ \-]?\d{2}[ \-]?\d{2}(?!\d)"
+    r"(?<![\w+])\(?(?:(?:\+90|0)[ ]?)?\(?5\d{2}\)?[ \-]?\d{3}[ \-]?\d{2}[ \-]?\d{2}(?!\d)"
 )
 
 def tckn_adaylari_bul(metin: str) -> list[Finding]:
@@ -52,7 +56,7 @@ def tckn_bul(metin: str) -> list[Finding]:
     return sonuc
 
 def iban_gecerli_mi(metin: str) -> bool:
-    iban = metin.replace(" ", "").upper()
+    iban = metin.replace(" ", "").replace("-", "").upper()
 
     if len(iban) != 26:
         return False
