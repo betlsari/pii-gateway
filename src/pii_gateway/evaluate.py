@@ -4,7 +4,7 @@ from pathlib import Path
 
 from pii_gateway.detectors import detect
 from pii_gateway.metrics import olc
-
+import sys
 
 def say(ornekler: list[dict]) -> dict[str, dict[str, int]]:
     sayac = defaultdict(lambda: {"tp": 0, "fp": 0, "fn": 0})
@@ -36,8 +36,9 @@ def rapor_yaz(sayac: dict[str, dict[str, int]]) -> None:
 
 
 def main() -> None:
-    yol = Path("data/ornekler.json")
+    yol = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/ornekler.json")
     ornekler = json.loads(yol.read_text(encoding="utf-8"))
+    print(f"{len(ornekler)} örnek: {yol}")
     rapor_yaz(say(ornekler))
 
 

@@ -1,6 +1,9 @@
 ﻿colorama==0.4.6
+Faker==40.63.0
 iniconfig==2.3.1
 packaging==26.3
+-e git+https://github.com/betlsari/pii-gateway.git@5d3f4dfd15a237567876b01cd7fffe2dbb90dd8f#egg=pii_gateway
 pluggy==1.7.0
 Pygments==2.21.0
 pytest==9.2.0
+tzdata==2026.6
