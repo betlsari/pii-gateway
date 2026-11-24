@@ -19,6 +19,7 @@ ZOR_ORNEKLER = [
     ("{} ve {}", [("TCKN", "10000000146"), ("TELEFON", "0532 123 45 67")]),
     # --- Yanlış alarm beklediklerimiz (FP) ---
     ("Sipariş: {}", [(None, "05321234567")]),    # telefon gibi görünen sipariş no
+    ("Sipariş no: {}", [(None, "5321234567")]),   # başsız, telefon değil
     ("Sipariş no: {}", [(None, "12345678950")]), # sağlamayı tesadüfen geçen sayı
 ]
 
